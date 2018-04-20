@@ -4,7 +4,7 @@ from .models import *
 # Create your views here.
 
 def index(request):
-    courses = Course.objects.all()
+    courses = Course.objects.all().order_by('created_at')
     context = {
         "courses": courses
     }
@@ -26,3 +26,10 @@ def delete(request, id):
     course = Course.objects.get(id = id)
     course.delete()
     return redirect('/')
+
+def confirm(request, id): 
+    course = Course.objects.get(id = id)
+    context = {
+        "course": course
+    }
+    return render(request, "first_app/delete.html", context)
